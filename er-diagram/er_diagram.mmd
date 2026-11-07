@@ -1,0 +1,55 @@
+erDiagram
+    AIRLINES ||--o{ FLIGHTS : operates
+    GATES ||--o{ FLIGHTS : assigned_to
+    FLIGHTS ||--o{ TICKETS : has
+    PASSENGERS ||--o{ TICKETS : books
+    TICKETS ||--o| CHECK_INS : has
+
+    AIRLINES {
+        int airline_id PK
+        varchar airline_name
+        varchar country
+        varchar contact_email
+    }
+
+    GATES {
+        int gate_id PK
+        varchar gate_number
+        varchar terminal
+        enum gate_status
+    }
+
+    FLIGHTS {
+        int flight_id PK
+        varchar flight_number
+        datetime departure_time
+        datetime arrival_time
+        enum flight_status
+        int airline_id FK
+        int gate_id FK
+    }
+
+    PASSENGERS {
+        int passenger_id PK
+        varchar first_name
+        varchar last_name
+        varchar passport_number UK
+        varchar nationality
+    }
+
+    TICKETS {
+        int ticket_id PK
+        varchar booking_reference UK
+        varchar seat_number
+        enum ticket_status
+        int flight_id FK
+        int passenger_id FK
+    }
+
+    CHECK_INS {
+        int checkin_id PK
+        datetime checkin_time
+        enum checkin_status
+        int baggage_count
+        int ticket_id FK,UK
+    }
